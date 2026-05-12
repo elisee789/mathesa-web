@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="MATHESA - Marque premium panafricaine spécialisée dans les échanges internationaux entre l'Afrique et le Canada. Cacao, Café, Anacarde.">
     <meta name="keywords" content="MATHESA, commerce international, Afrique, Canada, cacao, café, anacarde, export, import">
-    <title>MATHESA - L'Afrique au cœur des échanges</title>
+    <title>MATHESA</title>
     
     <!-- Favicon avec le logo M -->
     <link rel="icon" type="image/jpeg" href="assets/logo-icone.jpeg">
@@ -1172,6 +1172,457 @@ section.s{
         }
 
         /* ═══════════════════════════════════════════════════════════
+           BOUTON « EN SAVOIR PLUS » (ouvre le modal)
+           ═══════════════════════════════════════════════════════════ */
+        .btn-view-more {
+            background: transparent;
+            border: 1px solid var(--color-gold);
+            color: var(--color-gold);
+            padding: 0.85rem 1.5rem;
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin-top: 1.5rem;
+            border-radius: 3px;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-view-more::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(200, 155, 60, 0.25), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-view-more:hover::before {
+            left: 100%;
+        }
+
+        .btn-view-more:hover {
+            background: var(--color-gold);
+            color: var(--color-black);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(200, 155, 60, 0.3);
+        }
+
+        .btn-view-more .btn-arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-view-more:hover .btn-arrow {
+            transform: translateX(5px);
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           MODAL PRODUIT — Galerie + Détails
+           ═══════════════════════════════════════════════════════════ */
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+
+        .product-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .product-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .product-modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 1050px;
+            max-height: 92vh;
+            background: linear-gradient(180deg, #0d0d0d 0%, #050505 100%);
+            border: 1px solid rgba(200, 155, 60, 0.4);
+            border-radius: 6px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(200, 155, 60, 0.1);
+            overflow-y: auto;
+            overflow-x: hidden;
+            transform: scale(0.92) translateY(20px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+        }
+
+        .product-modal.active .product-modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* Bordure dorée subtile en haut */
+        .product-modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+        }
+
+        .product-modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            width: 42px;
+            height: 42px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(200, 155, 60, 0.4);
+            color: var(--color-gold);
+            border-radius: 50%;
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: var(--transition-smooth);
+            font-family: var(--font-body);
+        }
+
+        .product-modal-close:hover {
+            background: var(--color-gold);
+            color: var(--color-black);
+            border-color: var(--color-gold);
+            transform: rotate(90deg);
+        }
+
+        .product-modal-header {
+            padding: 2.5rem 2.5rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(200, 155, 60, 0.15);
+        }
+
+        .product-modal-eyebrow {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--color-gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+        }
+
+        .product-modal-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            color: var(--color-white);
+            letter-spacing: 3px;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .product-modal-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--color-gold);
+            margin: 0 auto;
+        }
+
+        .product-modal-body {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 2.5rem;
+            padding: 2rem 2.5rem 2.5rem;
+        }
+
+        /* ─────── Galerie (côté gauche) ─────── */
+        .modal-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-gallery-stage {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: #000;
+            border: 1px solid rgba(200, 155, 60, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .modal-gallery-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .modal-gallery-image.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .modal-gallery-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(200, 155, 60, 0.5);
+            color: var(--color-gold);
+            border-radius: 50%;
+            font-size: 1.4rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: var(--transition-smooth);
+            font-family: var(--font-body);
+            opacity: 0.6;
+        }
+
+        .modal-gallery-stage:hover .modal-gallery-arrow {
+            opacity: 1;
+        }
+
+        .modal-gallery-arrow:hover {
+            background: var(--color-gold);
+            color: var(--color-black);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .modal-gallery-prev {
+            left: 12px;
+        }
+
+        .modal-gallery-next {
+            right: 12px;
+        }
+
+        .modal-gallery-arrow:disabled,
+        .modal-gallery-arrow.hidden {
+            display: none;
+        }
+
+        .modal-gallery-counter {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--color-gold);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            z-index: 5;
+            border: 1px solid rgba(200, 155, 60, 0.3);
+        }
+
+        .modal-gallery-caption {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            letter-spacing: 2px;
+            padding: 0.4rem 0;
+            min-height: 1.8rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-gallery-thumbs {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .modal-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            opacity: 0.55;
+            transition: var(--transition-smooth);
+            padding: 0;
+            background: #000;
+            flex-shrink: 0;
+        }
+
+        .modal-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-thumb:hover {
+            opacity: 0.85;
+            transform: translateY(-2px);
+        }
+
+        .modal-thumb.active {
+            opacity: 1;
+            border-color: var(--color-gold);
+            box-shadow: 0 4px 12px rgba(200, 155, 60, 0.4);
+        }
+
+        /* ─────── Infos (côté droit) ─────── */
+        .modal-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+        }
+
+        .modal-info-block {
+            border-left: 2px solid var(--color-gold);
+            padding-left: 1.2rem;
+        }
+
+        .modal-info-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-gold);
+            margin-bottom: 0.6rem;
+        }
+
+        .modal-info-value {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .modal-info-value strong {
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+
+        .modal-ranges-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.2rem;
+        }
+
+        .modal-range-chip {
+            background: rgba(200, 155, 60, 0.1);
+            color: var(--color-gold-light);
+            border: 1px solid rgba(200, 155, 60, 0.3);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            font-family: var(--font-body);
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .modal-range-chip:hover {
+            background: rgba(200, 155, 60, 0.25);
+            border-color: var(--color-gold);
+        }
+
+        .modal-range-chip.active {
+            background: var(--color-gold);
+            color: var(--color-black);
+            border-color: var(--color-gold);
+            font-weight: 700;
+        }
+
+        /* Bloquer le scroll du body quand le modal est ouvert */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* ─────── Responsive modal ─────── */
+        @media (max-width: 860px) {
+            .product-modal {
+                padding: 0;
+                align-items: flex-start;
+            }
+            .product-modal-content {
+                max-height: 100vh;
+                min-height: 100vh;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+            .product-modal-body {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1.5rem 1.5rem 2rem;
+            }
+            .product-modal-header {
+                padding: 2rem 1.5rem 1.2rem;
+            }
+            .product-modal-title {
+                letter-spacing: 2px;
+            }
+            .modal-gallery-stage {
+                aspect-ratio: 4 / 3;
+            }
+            .modal-thumb {
+                width: 52px;
+                height: 52px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-modal-close {
+                top: 0.7rem;
+                right: 0.7rem;
+                width: 38px;
+                height: 38px;
+                font-size: 1.4rem;
+            }
+            .modal-gallery-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════
            CONTACT
            ═══════════════════════════════════════════════════════════ */
         #contact {
@@ -1465,7 +1916,7 @@ section.s{
             display: flex;
             gap: 3rem;
             padding: 3rem 2rem;
-            animation: scroll 30s linear infinite;
+            /* animation: scroll 30s linear infinite; */
             will-change: transform;
         }
 
@@ -1805,10 +2256,10 @@ section.s{
             <img src="assets/LOGO-sans-fond (3).png" alt="MATHESA - L'Afrique au cœur des échanges" class="hero-logo">
 
             <div class="hero-divider"></div>
-            <p class="hero-subtitle" data-i18n="hero-subtitle">L'Afrique au cœur des échanges</p>
+            <p class="hero-subtitle" data-i18n="hero-subtitle">De l'Afrique au Canada.Directement</p>
             <p class="hero-description" data-i18n="hero-description">
-                Marque premium panafricaine spécialisée dans les échanges internationaux 
-                de matières premières agricoles d'exception entre l'Afrique et l'Amérique du Nord.
+                Mathesa importe et distribue des matières premières agricoles premium d'Afrique vers le Canada,
+                avec un engagement clair sur la qualité, la traçabilité et la fiabilité d'approvisionnement.
             </p>
             <a href="#products" class="btn-cta" data-i18n="hero-cta">Découvrir nos produits</a>
         </div>
@@ -1834,26 +2285,29 @@ section.s{
             <div class="about-content">
                 <div class="about-text animate-on-scroll">
                     <p data-i18n="about-p1">
-                        <strong>MATHESA</strong> est une entreprise panafricaine spécialisée dans 
-                        l'import/export de produits agricoles d'excellence entre l'Afrique et 
-                        l'Amérique du Nord, notamment le Canada.
+                        <strong>MATHESA</strong>MATHESA est une entreprise Canadienne spécialisée dans l'importation et l'exportation 
+                        entre l'Afrique et le Canada en garantissant les meilleurs standards de qualité,
+                        de traçabilité et de fiabilité logistique
                     </p>
                     <p data-i18n="about-p2">
-                        Nous mettons en valeur le <strong>potentiel agricole exceptionnel</strong> 
+                        Pourquoi choisir <strong>MATHESA</strong> ?
+                        <!-- Nous mettons en valeur le <strong>potentiel agricole exceptionnel</strong> 
                         du continent africain sur les marchés internationaux, en garantissant des 
                         standards de qualité, de traçabilité et de durabilité parmi les plus 
-                        exigeants au monde.
-                    </p>
+                        exigeants au monde. -->
+                    </p> 
                     <p data-i18n="about-p3">
-                        Notre approche conjugue <strong>excellence opérationnelle</strong> et 
-                        <strong>ambition panafricaine</strong>, faisant de chaque partenariat 
-                        une opportunité de valoriser le savoir-faire des producteurs africains.
+                        Notre avantage repose sur le <strong>double ancrage</strong>
+                        Guinéo - Canadien des fondateurs et une exigence
+                        d'exécution orientée satisfaction des partenaires.
+                        Mathesa porte simultanément la <strong>connaissance intime</strong> 
+                        des filières agricoles de l'Afrique de l'ouest et la maitrise du marché Canadien. 
                     </p>
 
                     <div class="about-stats">
                         <div class="stat"><div class="num">3</div><div class="lbl" data-i18n="stat_a">Produits phares</div></div>
-                        <div class="stat"><div class="num">5</div><div class="lbl" data-i18n="stat_b">Pays d'origine</div></div>
-                        <div class="stat"><div class="num">2</div><div class="lbl" data-i18n="stat_c">Continents reliés</div></div>
+                        <div class="stat"><div class="num">1</div><div class="lbl" data-i18n="stat_b">Pays d'origine</div></div>
+                        <div class="stat"><div class="num">2</div><div class="lbl" data-i18n="stat_c">Continents qui commercent</div></div>
                     </div>
                 </div>
 
@@ -1867,28 +2321,28 @@ section.s{
         <div class="gallery-wrapper">
         <!-- Images -->
             <div class="gallery-track">
-                <img src="assets/plantation-cacao-2.jpg" alt="Plantation africaine - Cacao" class="about-image gallery-image active">
-                <img src="assets/plantation-cafe.jpg" alt="Plantation africaine - Café" class="about-image gallery-image">
+                <img src="assets/logo-principal.jpeg" alt="Logo MATHESA" class="about-image gallery-image active">
+                <!-- <img src="assets/plantation-cafe.jpg" alt="Plantation africaine - Café" class="about-image gallery-image">
                 <img src="assets/plantation-anacarde.jpg" alt="Plantation africaine - Anacarde" class="about-image gallery-image">  
                 <img src="assets/cabosse-cacao-2.jpg" alt="Plantation africaine - Anacarde" class="about-image gallery-image">    
                 <img src="assets/grain-cafe.jpg" alt="Plantation africaine - Anacarde" class="about-image gallery-image">    
-                <img src="assets/anacarde.jpg" alt="Anacarde frais" class="about-image gallery-image">    
+                <img src="assets/anacarde.jpg" alt="Anacarde frais" class="about-image gallery-image">     -->
 
 
             </div>
         
         <!-- Contrôles de navigation -->
-            <button class="gallery-btn gallery-prev" aria-label="Image précédente">❮</button>
-            <button class="gallery-btn gallery-next" aria-label="Image suivante">❯</button>
+            <!-- <button class="gallery-btn gallery-prev" aria-label="Image précédente">❮</button>
+            <button class="gallery-btn gallery-next" aria-label="Image suivante">❯</button> -->
             
             <!-- Indicateurs (dots) -->
             <div class="gallery-dots">
                 <button class="dot active" data-index="0" aria-label="Image 1"></button>
-                <button class="dot" data-index="1" aria-label="Image 2"></button>
+                <!-- <button class="dot" data-index="1" aria-label="Image 2"></button>
                 <button class="dot" data-index="2" aria-label="Image 3"></button>
                 <button class="dot" data-index="3" aria-label="Image 4"></button>
                 <button class="dot" data-index="4" aria-label="Image 5"></button>
-                <button class="dot" data-index="5" aria-label="Image 6"></button>
+                <button class="dot" data-index="5" aria-label="Image 6"></button> -->
 
             </div>
         </div>
@@ -2011,8 +2465,8 @@ section.s{
     <div class="pillars">
       <article class="pillar-text reveal">
         <h3 data-i18n="mv_credo_label">Crédo</h3>
-        <p data-i18n="mv_credo_p1">Bâtir un négoce africain qui se tient debout — droit, sourcé, mesuré. Pas un intermédiaire de plus, mais une maison de confiance entre celles et ceux qui cultivent et celles et ceux qui consomment.</p>
-        <p data-i18n="mv_credo_p2">Chaque sac de cacao, chaque grain de café, chaque amande d'anacarde porte un nom, une terre, et une promesse. Rien n'est anonyme.</p>
+        <p data-i18n="mv_credo_p1">Bâtir un négoce africain qui se tient debout droit, sourcé, mesuré. Pas un intermédiaire de plus, mais une maison de confiance entre celles et ceux qui cultivent et celles et ceux qui consomment.</p>
+        <p data-i18n="mv_credo_p2">Chaque sac de cacao, chaque grain de café, chaque amande de cajou porte un nom, une terre, et une promesse. Une vraie identité.</p>
       </article>
 
       <div class="pillar-stack">
@@ -2021,7 +2475,7 @@ section.s{
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
           </div>
           <h4 data-i18n="mv_mission_t">Mission</h4>
-          <p data-i18n="mv_mission_p">Connecter directement les producteurs africains aux marchés nord-américains avec exigence, traçabilité et respect des terroirs.</p>
+          <p data-i18n="mv_mission_p">Connecter les producteurs ivoiriens aux marchés canadiens à travers une chaîne d'approvisionnement fiable et professionnelle. Chaque expédition est un engagement envers la qualité et la transparence</p>
         </article>
 
         <article class="p-card reveal d2">
@@ -2029,7 +2483,7 @@ section.s{
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,3 14.5,9 21,9.5 16,14 17.5,21 12,17 6.5,21 8,14 3,9.5 9.5,9"/></svg>
           </div>
           <h4 data-i18n="mv_vision_t">Vision</h4>
-          <p data-i18n="mv_vision_p">Faire de Mathesa la signature du commerce africain premium — référence reconnue, des plantations aux ports, des ports aux comptoirs.</p>
+          <p data-i18n="mv_vision_p">Devenir la référence canadienne en matière d'importation de matières premières agricoles africaines, reconnue pour la qualité de ses produits, la fiabilité de sa chaîne d'approvisionnement et son engagement envers le commerce équitable.Un pont commercial durable entre deux continents</p>
         </article>
       </div>
     </div>
@@ -2130,7 +2584,7 @@ section.s{
                 </h2>
                 <div class="section-divider"></div>
                 <p class="section-subtitle" data-i18n="products-subtitle">
-                    L'excellence agricole africaine au service du commerce mondial
+                    L'excellence agricole de Côte d'Ivoire, directement au Canada.
                 </p>
             </div>
 
@@ -2147,14 +2601,20 @@ section.s{
                     <div class="product-content">
                         <h3 data-i18n="product-cocoa-title">Cacao</h3>
                         <p class="product-description" data-i18n="product-cocoa-desc">
-                            Issu des meilleures plantations d'Afrique de l'Ouest, notre cacao se 
-                            distingue par ses arômes intenses et sa qualité premium, destiné aux 
-                            marchés d'exportation les plus exigeants.
+                        Notre cacao de Côte d'Ivoire est reconnu dans le monde entier pour sa richesse aromatique,
+                        sa régularité et la qualité de ses fèves, qui en font une matière première de choix pour 
+                        les chocolatiers, les transformateurs et les acheteurs exigeants. 
                         </p>
-                        <div class="product-meta">
+                        <!-- <div class="product-meta">
                             <span>🌍</span>
                             <span data-i18n="product-cocoa-origin">Côte d'Ivoire · Ghana</span>
-                        </div>
+                        </div> -->
+
+                        <!-- Bouton qui ouvre le modal -->
+                        <button type="button" class="btn-view-more" data-open-product="cocoa">
+                            <span class="btn-text" data-i18n="btn-view-more">En savoir plus</span>
+                            <span class="btn-arrow" aria-hidden="true">→</span>
+                        </button>
                     </div>
                 </article>
 
@@ -2175,14 +2635,20 @@ section.s{
                     <div class="product-content">
                         <h3 data-i18n="product-coffee-title">Café</h3>
                         <p class="product-description" data-i18n="product-coffee-desc">
-                            Nos cafés d'origine africaine sont reconnus pour leur profil 
-                            aromatique unique. Nous travaillons avec des producteurs sélectionnés 
-                            pour garantir une traçabilité et une excellence constante.
+                            Notre café de Côte d'Ivoire séduit par son identité africaine authentique, sa qualité en pleine évolution
+                            et son potentiel sur les marchés spécialisés comme commerciaux. Le robusta est un café de caractère, dense,
+                            puissant, avec une teneur en caféine deux fois supérieure à l'Arabica.
                         </p>
-                        <div class="product-meta">
+                        <!-- <div class="product-meta">
                             <span>🌍</span>
                             <span data-i18n="product-coffee-origin">Éthiopie · Côte d'Ivoire · Kenya</span>
-                        </div>
+                        </div> -->
+
+                        <!-- Bouton qui ouvre le modal -->
+                        <button type="button" class="btn-view-more" data-open-product="coffee">
+                            <span class="btn-text" data-i18n="btn-view-more">En savoir plus</span>
+                            <span class="btn-arrow" aria-hidden="true">→</span>
+                        </button>
                     </div>
                 </article>
 
@@ -2199,16 +2665,21 @@ section.s{
                         <span class="product-tag" data-i18n="product-tag-cashew">Qualité</span>
                     </div>
                     <div class="product-content">
-                        <h3 data-i18n="product-cashew-title">Anacarde</h3>
+                        <h3 data-i18n="product-cashew-title">Amande de cajou</h3>
                         <p class="product-description" data-i18n="product-cashew-desc">
-                            Premier produit d'exportation agricole de plusieurs pays africains, 
-                            l'anacarde MATHESA répond aux standards internationaux les plus 
-                            stricts en termes de qualité et de conditionnement.
+                            Nos amandes de cajou de Côte d'Ivoire sont d'une densité et d'une fraîcheur exceptionnelles.
+                            Elles se distinguent par leur qualité reconnue et leur potentiel commercial.
                         </p>
-                        <div class="product-meta">
+                        <!-- <div class="product-meta">
                             <span>🌍</span>
                             <span data-i18n="product-cashew-origin">Côte d'Ivoire · Burkina Faso</span>
-                        </div>
+                        </div> -->
+
+                        <!-- Bouton qui ouvre le modal -->
+                        <button type="button" class="btn-view-more" data-open-product="cashew">
+                            <span class="btn-text" data-i18n="btn-view-more">En savoir plus</span>
+                            <span class="btn-arrow" aria-hidden="true">→</span>
+                        </button>
                     </div>
                 </article>
             </div>
@@ -2241,9 +2712,9 @@ section.s{
                 <div class="carousel-track">
                     <!-- Répète les logos pour créer l'effet infini -->
                     <div class="carousel-item">
-                        <img src="assets/creation-logo-au-chocolat_742173-20242.avif" alt="Partenaire 1">
+                        <img src="assets/partenaire 1.png" alt="Dioune & Frères SARL">
                     </div>
-                    <div class="carousel-item">
+                    <!-- <div class="carousel-item">
                         <img src="assets/logo-allie.png" alt="Partenaire 2">
                     </div>
                     <div class="carousel-item">
@@ -2257,10 +2728,10 @@ section.s{
                     </div>
                     <div class="carousel-item">
                         <img src="assets/logo-allie.png" alt="Partenaire 6">
-                    </div>
+                    </div> -->
 
                     <!-- Duplication pour effet infini -->
-                    <div class="carousel-item">
+                    <!-- <div class="carousel-item">
                         <img src="assets/logo-allie.png" alt="Partenaire 1">
                     </div>
                     <div class="carousel-item">
@@ -2277,7 +2748,7 @@ section.s{
                     </div>
                     <div class="carousel-item">
                         <img src="assets/logo-allie.png" alt="Partenaire 6">
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -2309,7 +2780,8 @@ section.s{
                     <div>
                         <h3 class="contact-info-title" data-i18n="contact-info-title">Nos Coordonnées</h3>
                         <p class="contact-info-subtitle" data-i18n="contact-info-subtitle">
-                            Notre équipe vous répondra sous 48 heures ouvrées.
+                            Acheteur canadien, investisseur ou partenaire logistique, 
+                            notre équipe vous répond sous 48 heures ouvrées. Chaque partenariat commence par une conversation honnête
                         </p>
                     </div>
 
@@ -2318,8 +2790,8 @@ section.s{
                         <div class="contact-detail">
                             <div class="contact-detail-label" data-i18n="contact-address-label">Adresse</div>
                             <div class="contact-detail-value" data-i18n="contact-address-value">
-                                Abidjan, Côte d'Ivoire<br>
-                                Afrique de l'Ouest
+                                129, rue Des Montagnais<br>
+                               Gatineau, Québec, J9J2M7 
                             </div>
                         </div>
                     </div>
@@ -2329,7 +2801,7 @@ section.s{
                         <div class="contact-detail">
                             <div class="contact-detail-label" data-i18n="contact-phone-label">Téléphone</div>
                             <div class="contact-detail-value">
-                                <a href="tel:+22500000000">+225 XX XX XX XX XX</a>
+                                <a href="tel:+18193290006">+18193290006</a>
                             </div>
                         </div>
                     </div>
@@ -2349,8 +2821,8 @@ section.s{
                         <div class="contact-detail">
                             <div class="contact-detail-label" data-i18n="contact-hours-label">Heures d'ouverture</div>
                             <div class="contact-detail-value" data-i18n="contact-hours-value">
-                                Lundi - Vendredi : 8h - 18h<br>
-                                Fuseau GMT
+                                Lundi au Vendredi : 8h - 18h<br>
+                                GMT-4
                             </div>
                         </div>
                     </div>
@@ -2420,7 +2892,7 @@ section.s{
             <img src="assets/LOGO_3-removebg.png" alt="MATHESA Logo" class="footer-logo">
             
             <p class="footer-signature" data-i18n="footer-signature">
-                « L'Afrique au cœur des échanges »
+                « De l'Afrique au Canada. Directement »
             </p>
             
             <div class="footer-divider"></div>
@@ -2430,6 +2902,57 @@ section.s{
             </p>
         </div>
     </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MODAL PRODUIT — Galerie + Détails
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="productModalTitle">
+        <div class="product-modal-backdrop" data-close-modal></div>
+
+        <div class="product-modal-content">
+            <button type="button" class="product-modal-close" data-close-modal aria-label="Fermer / Close">×</button>
+
+            <header class="product-modal-header">
+                <p class="product-modal-eyebrow" id="productModalEyebrow"></p>
+                <h2 class="product-modal-title" id="productModalTitle"></h2>
+                <div class="product-modal-divider"></div>
+            </header>
+
+            <div class="product-modal-body">
+                <!-- Galerie -->
+                <div class="modal-gallery">
+                    <div class="modal-gallery-stage" id="modalGalleryStage">
+                        <span class="modal-gallery-counter" id="modalGalleryCounter">1 / 1</span>
+                        <button type="button" class="modal-gallery-arrow modal-gallery-prev" id="modalGalleryPrev" aria-label="Précédent / Previous">‹</button>
+                        <button type="button" class="modal-gallery-arrow modal-gallery-next" id="modalGalleryNext" aria-label="Suivant / Next">›</button>
+                        <!-- Les images sont injectées dynamiquement -->
+                    </div>
+                    <p class="modal-gallery-caption" id="modalGalleryCaption"></p>
+                    <div class="modal-gallery-thumbs" id="modalGalleryThumbs">
+                        <!-- Les miniatures sont injectées dynamiquement -->
+                    </div>
+                </div>
+
+                <!-- Infos détaillées -->
+                <aside class="modal-info">
+                    <div class="modal-info-block">
+                        <p class="modal-info-label" data-i18n="more-origin-label">Origine</p>
+                        <p class="modal-info-value" id="modalOrigin"></p>
+                    </div>
+                    <div class="modal-info-block">
+                        <p class="modal-info-label" data-i18n="more-grades-label">Grades disponibles</p>
+                        <p class="modal-info-value" data-i18n="more-grades-value">Grades 1 et 2</p>
+                    </div>
+                    <div class="modal-info-block">
+                        <p class="modal-info-label" data-i18n="more-ranges-label">Gammes disponibles</p>
+                        <div class="modal-ranges-list" id="modalRangesList">
+                            <!-- Les puces sont injectées dynamiquement -->
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
 
     <!-- ═══════════════════════════════════════════════════════════
          JAVASCRIPT
@@ -2448,8 +2971,8 @@ section.s{
                 
                 // Hero
                 'hero-title': 'MATHESA',
-                'hero-subtitle': 'L\'Afrique au cœur des échanges',
-                'hero-description': 'Marque premium panafricaine spécialisée dans les échanges internationaux de matières premières agricoles d\'exception entre l\'Afrique et l\'Amérique du Nord.',
+                'hero-subtitle': 'De l\'Afrique au Canada.Directement',
+                'hero-description': 'Mathesa importe et distribue des matières premières agricoles premium d\'Afrique vers le Canada, avec un engagement clair sur la qualité, la traçabilité et la fiabilité d\'approvisionnement.',
                 'hero-cta': 'Découvrir nos produits',
                 
                 // À propos
@@ -2457,12 +2980,12 @@ section.s{
                 'about-title-1': 'Qui',
                 'about-title-2': 'sommes-nous',
                 'about-title-3': '?',
-                'about-p1': '<strong>MATHESA</strong> est une entreprise panafricaine spécialisée dans l\'import/export de produits agricoles d\'excellence entre l\'Afrique et l\'Amérique du Nord, notamment le Canada.',
-                'about-p2': 'Nous mettons en valeur le <strong>potentiel agricole exceptionnel</strong> du continent africain sur les marchés internationaux, en garantissant des standards de qualité, de traçabilité et de durabilité parmi les plus exigeants au monde.',
-                'about-p3': 'Notre approche conjugue <strong>excellence opérationnelle</strong> et <strong>ambition panafricaine</strong>, faisant de chaque partenariat une opportunité de valoriser le savoir-faire des producteurs africains.',
+                'about-p1': '<strong>MATHESA</strong> est une entreprise Canadienne spécialisée dans l\'importation et l\'exportation entre l\'Afrique et le Canada en garantissant les meilleurs standards de qualité, de traçabilité et de fiabilité logistique.',
+                'about-p2': 'Pourquoi choisir <strong>MATHESA</strong> ?',
+                'about-p3': 'Notre avantage repose sur le <strong>double ancrage</strong> Guinéo - Canadien des fondateurs et une exigence d\'exécution orientée satisfaction des partenaires. Mathesa porte simultanément la <strong>connaissance intime</strong> des filières agricoles de l\'Afrique de l\'ouest et la maitrise du marché Canadien. ',
                 'stat_a':"Produits phares",
                 'stat_b':"Pays d'origine",
-                'stat_c':"Continents reliés",
+                'stat_c':"Continents qui commercent",
                 
                 // Mission & Vision
                 'mv-eyebrow': 'Notre Engagement',
@@ -2478,12 +3001,12 @@ section.s{
                 'mv_eyebrow':"Notre boussole",
                 'mv_h2':"Mission & Vision",
                 'mv_credo_label':"Crédo",
-                'mv_credo_p1':"Bâtir un négoce africain qui se tient debout — droit, sourcé, mesuré. Pas un intermédiaire de plus, mais une maison de confiance entre celles et ceux qui cultivent et celles et ceux qui consomment.",
-                'mv_credo_p2':"Chaque sac de cacao, chaque grain de café, chaque amande d'anacarde porte un nom, une terre, et une promesse. Rien n'est anonyme.",
+                'mv_credo_p1':"Bâtir un négoce africain qui se tient debout droit, sourcé, mesuré. Pas un intermédiaire de plus, mais une maison de confiance entre celles et ceux qui cultivent et celles et ceux qui consomment.",
+                'mv_credo_p2':"Chaque sac de cacao, chaque grain de café, chaque amande de cajou porte un nom, une terre, et une promesse. Une vraie identité.",
                 'mv_mission_t':"Mission",
-                'mv_mission_p':"Connecter directement les producteurs africains aux marchés nord-américains avec exigence, traçabilité et respect des terroirs.",
+                'mv_mission_p':"Connecter les producteurs ivoiriens aux marchés canadiens à travers une chaîne d\'approvisionnement fiable et professionnelle. Chaque expédition est un engagement envers la qualité et la transparence.",
                 'mv_vision_t':"Vision",
-                'mv_vision_p':"Faire de Mathesa la signature du commerce africain premium référence reconnue, des plantations aux ports, des ports aux comptoirs.",
+                'mv_vision_p':"Devenir la référence canadienne en matière d'importation de matières premières agricoles africaines, reconnue pour la qualité de ses produits, la fiabilité de sa chaîne d'approvisionnement et son engagement envers le commerce équitable.Un pont commercial durable entre deux continents.",
 
                 // Valeurs
                 'values-eyebrow': 'Ce qui nous guide',
@@ -2504,19 +3027,38 @@ section.s{
                 'products-eyebrow': 'Notre Sélection',
                 'products-title-1': 'Nos',
                 'products-title-2': 'Produits',
-                'products-subtitle': 'L\'excellence agricole africaine au service du commerce mondial',
+                'products-subtitle': 'L\'excellence agricole de Côte d\'Ivoire, directement au Canada.',
                 'product-tag-cocoa': 'Premium',
                 'product-cocoa-title': 'Cacao',
-                'product-cocoa-desc': 'Issu des meilleures plantations d\'Afrique de l\'Ouest, notre cacao se distingue par ses arômes intenses et sa qualité premium, destiné aux marchés d\'exportation les plus exigeants.',
+                'product-cocoa-desc': 'Notre cacao de Côte d\'Ivoire est reconnu dans le monde entier pour sa richesse aromatique, sa régularité et la qualité de ses fèves, qui en font une matière première de choix pour les chocolatiers, les transformateurs et les acheteurs exigeants.',
                 'product-cocoa-origin': 'Côte d\'Ivoire · Ghana',
                 'product-tag-coffee': 'Excellence',
                 'product-coffee-title': 'Café',
-                'product-coffee-desc': 'Nos cafés d\'origine africaine sont reconnus pour leur profil aromatique unique. Nous travaillons avec des producteurs sélectionnés pour garantir une traçabilité et une excellence constante.',
+                'product-coffee-desc': 'Notre café de Côte d\'Ivoire séduit par son identité africaine authentique, sa qualité en pleine évolution et son potentiel sur les marchés spécialisés comme commerciaux. Le robusta est un café de caractère, dense, puissant, avec une teneur en caféine deux fois supérieure à l\'Arabica.',
                 'product-coffee-origin': 'Éthiopie · Côte d\'Ivoire · Kenya',
                 'product-tag-cashew': 'Qualité',
-                'product-cashew-title': 'Anacarde',
-                'product-cashew-desc': 'Premier produit d\'exportation agricole de plusieurs pays africains, l\'anacarde MATHESA répond aux standards internationaux les plus stricts en termes de qualité et de conditionnement.',
+                'product-cashew-title': 'Amande de cajou',
+                'product-cashew-desc': 'Nos amandes de cajou de Côte d\'Ivoire sont d\'une densité et d\'une fraîcheur exceptionnelles. Elles se distinguent par leur qualité reconnue et leur potentiel commercial.',
                 'product-cashew-origin': 'Côte d\'Ivoire · Burkina Faso',
+
+                // Produits — Section "En savoir plus"
+                'btn-view-more': 'En savoir plus',
+                'btn-view-less': 'Voir moins',
+                'more-origin-label': 'Origine',
+                'more-grades-label': 'Grades disponibles',
+                'more-grades-value': 'Grades 1 et 2',
+                'more-ranges-label': 'Gammes disponibles',
+                // Cacao - détails
+                'cocoa-origin-full': 'Côte d\'Ivoire, premier producteur et exportateur mondial de cacao, fournissant environ 40 à 45 % de l\'offre mondiale.',
+                'cocoa-range-1': 'Beurre de cacao',
+                'cocoa-range-2': 'Poudre de cacao',
+                'cocoa-range-3': 'Fèves de cacao',
+                'cocoa-range-4': 'Pâte de cacao',
+                // Café - détails
+                'coffee-origin-full': 'Côte d\'Ivoire, se positionnant comme le troisième exportateur africain de café (principalement Robusta).',
+                'coffee-range-1': 'Grains de café vert',
+                // Anacarde - détails
+                'cashew-origin-full': 'Côte d\'Ivoire. Leader mondial de la production de noix de cajou et le deuxième fournisseur d\'amandes, après le Vietnam.',
 
                 
                 // Contact
@@ -2525,13 +3067,13 @@ section.s{
                 'contact-title-2': 'nous',
                 'contact-subtitle': 'Une question, un projet, un partenariat ? Notre équipe est à votre écoute.',
                 'contact-info-title': 'Nos Coordonnées',
-                'contact-info-subtitle': 'Notre équipe vous répondra sous 48 heures ouvrées.',
+                'contact-info-subtitle': 'Acheteur canadien, investisseur ou partenaire logistique, notre équipe vous répond sous 48 heures ouvrées. Chaque partenariat commence par une conversation honnête.',
                 'contact-address-label': 'Adresse',
-                'contact-address-value': 'Abidjan, Côte d\'Ivoire<br>Afrique de l\'Ouest',
+                'contact-address-value': '129, rue Des Montagnais<br> Gatineau, Québec, J9J2M7',
                 'contact-phone-label': 'Téléphone',
                 'contact-email-label': 'Email',
                 'contact-hours-label': 'Heures d\'ouverture',
-                'contact-hours-value': 'Lundi - Vendredi : 8h - 18h<br>Fuseau GMT',
+                'contact-hours-value': 'Lundi au Vendredi : 8h - 18h<br>GMT-4',
                 
                 // Formulaire
                 'form-title': 'Envoyez-nous un message',
@@ -2565,7 +3107,7 @@ section.s{
                 'partners-trust': 'partenaires',
                 
                 // Footer
-                'footer-signature': '« L\'Afrique au cœur des échanges »',
+                'footer-signature': '« De l\'Afrique au Canada. Directement »',
                 'footer-copyright': '© 2025 MATHESA. Tous droits réservés. | Marque premium panafricaine'
             },
             en: {
@@ -2577,8 +3119,8 @@ section.s{
                 
                 // Hero
                 'hero-title': 'MATHESA',
-                'hero-subtitle': 'Africa at the Heart of Trade',
-                'hero-description': 'Premium pan-African brand specializing in international trade of exceptional agricultural raw materials between Africa and North America.',
+                'hero-subtitle': 'Direct from Africa to Canada',
+                'hero-description': 'Mathesa imports and distributes premium agricultural commodities from Africa to Canada, with a clear commitment to quality, traceability, and supply reliability.',
                 'hero-cta': 'Discover Our Products',
                 
                 // About
@@ -2586,12 +3128,12 @@ section.s{
                 'about-title-1': 'Who',
                 'about-title-2': 'we are',
                 'about-title-3': '?',
-                'about-p1': '<strong>MATHESA</strong> is a pan-African company specialized in the import/export of premium agricultural products between Africa and North America, particularly Canada.',
-                'about-p2': 'We highlight the <strong>exceptional agricultural potential</strong> of the African continent on international markets, ensuring quality, traceability and sustainability standards among the most demanding in the world.',
-                'about-p3': 'Our approach combines <strong>operational excellence</strong> and <strong>pan-African ambition</strong>, making each partnership an opportunity to value the expertise of African producers.',
+                'about-p1': '<strong>MATHESA</strong> is a Canadian company specializing in import and export between Africa and Canada, ensuring the highest standards of quality, traceability, and logistical reliability.',
+                'about-p2': 'Why Choose <strong>MATHESA</strong> ?',
+                'about-p3': 'Our strength lies in the founders\' <strong>dual roots</strong> in Guinea and Canada, as well as our commitment to delivering results that prioritize partner satisfaction. Mathesa combines an <strong>in-depth understanding</strong> of West African agricultural supply chains with a thorough knowledge of the Canadian market.',
                 'stat_a':"Flagship products",
                 'stat_b':"Countries of origin",
-                'stat_c':"Continents bridged",
+                'stat_c':"Continents that trade",
 
                 // Mission & Vision
                 'mv-eyebrow': 'Our Commitment',
@@ -2607,12 +3149,12 @@ section.s{
                 'mv_eyebrow':"Our compass",
                 'mv_h2':"Mission & Vision",
                 'mv_credo_label':"Credo",
-                'mv_credo_p1':"To build an African trading house that stands tall — straight, sourced, measured. Not one more middleman, but a house of trust between those who grow and those who consume.",
-                'mv_credo_p2':"Every sack of cocoa, every coffee bean, every cashew kernel carries a name, a land, and a promise. Nothing is anonymous.",
+                'mv_credo_p1':"Building a sustainable, responsible, and balanced African business. Not just another middleman, but a trusted partner between those who grow and those who consume.",
+                'mv_credo_p2':"Every bag of cocoa, every coffee bean, every cashew nut carries a name, a place, and a promise. A true identity.",
                 'mv_mission_t':"Mission",
-                'mv_mission_p':"To connect African growers directly with North American markets with rigor, traceability and respect for terroirs.",
+                'mv_mission_p':"Connecting Ivorian producers to Canadian markets through a reliable and professional supply chain. Every shipment represents a commitment to quality and transparency.",
                 'mv_vision_t':"Vision",
-                'mv_vision_p':"To make Mathesa the signature of premium African trade a recognised reference, from plantations to ports, from ports to counters.",
+                'mv_vision_p':"To become Canada\'s leading importer of African agricultural commodities, recognized for the quality of its products, the reliability of its supply chain, and its commitment to fair trade. A sustainable trade bridge between two continents.",
                 
                 // Values
                 'values-eyebrow': 'What guides us',
@@ -2633,19 +3175,38 @@ section.s{
                 'products-eyebrow': 'Our Selection',
                 'products-title-1': 'Our',
                 'products-title-2': 'Products',
-                'products-subtitle': 'African agricultural excellence serving global trade',
+                'products-subtitle': 'The finest agricultural commodities from Côte d\'Ivoire, delivered directly to Canada.',
                 'product-tag-cocoa': 'Premium',
                 'product-cocoa-title': 'Cocoa',
-                'product-cocoa-desc': 'Sourced from the finest West African plantations, our cocoa stands out for its intense aromas and premium quality, destined for the most demanding export markets.',
+                'product-cocoa-desc': 'Our cocoa from Côte d\'Ivoire is recognized worldwide for its rich aroma, texture, and the quality of its beans, making it a raw material of choice for chocolatiers, processors, and discerning buyers.',
                 'product-cocoa-origin': 'Ivory Coast · Ghana',
                 'product-tag-coffee': 'Excellence',
                 'product-coffee-title': 'Coffee',
-                'product-coffee-desc': 'Our African-origin coffees are recognized for their unique aromatic profile. We work with selected producers to ensure traceability and consistent excellence.',
+                'product-coffee-desc': 'Our coffee from Côte d\'Ivoire stands out for its authentic African character, its ever-improving quality, and its potential in both specialty and commercial markets. Robusta is a coffee with character dense, robust and a caffeine content twice that of Arabica.',
                 'product-coffee-origin': 'Ethiopia · Ivory Coast · Kenya',
                 'product-tag-cashew': 'Quality',
-                'product-cashew-title': 'Cashew',
-                'product-cashew-desc': 'The leading agricultural export product of several African countries, MATHESA cashew meets the strictest international standards in terms of quality and packaging.',
+                'product-cashew-title': 'Cashew nut Kernels',
+                'product-cashew-desc': 'Our cashews from Côte d\'Ivoire are exceptionally dense and fresh.They stand out for their recognized quality and commercial potential.',
                 'product-cashew-origin': 'Ivory Coast · Burkina Faso',
+
+                // Products — "View More" section
+                'btn-view-more': 'View More',
+                'btn-view-less': 'View Less',
+                'more-origin-label': 'Origin',
+                'more-grades-label': 'Available grades',
+                'more-grades-value': 'Grades 1 and 2',
+                'more-ranges-label': 'Available Ranges',
+                // Cocoa - details
+                'cocoa-origin-full': 'Côte d\'Ivoire is the world\'s leading producer and exporter of cocoa, accounting for approximately 40 to 45 percent of the global supply.',
+                'cocoa-range-1': 'Cocoa butter',
+                'cocoa-range-2': 'Cocoa powder',
+                'cocoa-range-3': 'Cocoa beans',
+                'cocoa-range-4': 'Cocoa paste',
+                // Coffee - details
+                'coffee-origin-full': 'Côte d\'Ivoire, which ranks as Africa\'s third-largest coffee exporter (primarily Robusta).',
+                'coffee-range-1': 'Green coffee beans',
+                // Cashew - details
+                'cashew-origin-full': 'Côte d\'Ivoire. The world\'s leading producer of cashews and the second-largest supplier of cashew kernels, after Vietnam.',
                 
                 // Contact
                 'contact-eyebrow': 'Get in touch',
@@ -2653,13 +3214,13 @@ section.s{
                 'contact-title-2': 'us',
                 'contact-subtitle': 'A question, a project, a partnership? Our team is here to listen.',
                 'contact-info-title': 'Our Contact Details',
-                'contact-info-subtitle': 'Our team will respond within 48 business hours.',
+                'contact-info-subtitle': 'Canadian buyer, investor, or logistics partner, our team responds within 48 business hours. Every partnership starts with an honest conversation.',
                 'contact-address-label': 'Address',
-                'contact-address-value': 'Abidjan, Ivory Coast<br>West Africa',
+                'contact-address-value': '129, rue Des Montagnais<br> Gatineau, Québec, J9J2M7', 
                 'contact-phone-label': 'Phone',
                 'contact-email-label': 'Email',
                 'contact-hours-label': 'Business Hours',
-                'contact-hours-value': 'Monday - Friday: 8am - 6pm<br>GMT Timezone',
+                'contact-hours-value': 'Monday to Friday: 8Am - 6PM',
                 
                 // Form
                 'form-title': 'Send us a message',
@@ -2694,7 +3255,7 @@ section.s{
                 'partners-trust': 'Partners',
                 
                 // Footer
-                'footer-signature': '« Africa at the Heart of Trade »',
+                'footer-signature': '« Direct from Africa to Canada »',
                 'footer-copyright': '© 2025 MATHESA. All rights reserved. | Premium Pan-African Brand'
             }
         };
@@ -2935,6 +3496,228 @@ section.s{
                 }
             });
         });
+        /* ═══════════════════════════════════════════════════════════
+           MODAL PRODUIT — Données + Ouverture / Navigation / Fermeture
+           ═══════════════════════════════════════════════════════════ */
+        // Données structurées pour chaque produit (les clés i18n existent déjà)
+        const PRODUCTS_DATA = {
+            cocoa: {
+                titleKey: 'product-cocoa-title',
+                eyebrowKey: 'product-tag-cocoa',
+                originKey: 'cocoa-origin-full',
+                ranges: [
+                    { nameKey: 'cocoa-range-1', img: 'assets/beurre-cacao.jpg?w=900&q=80' }, 
+                    { nameKey: 'cocoa-range-2', img: 'assets/poudre-cacao.jpg?w=900&q=80' },
+                    { nameKey: 'cocoa-range-3', img: 'assets/feves-cacao.jpg?w=900&q=80' },
+                    { nameKey: 'cocoa-range-4', img: 'assets/pate-cacao.jpg?w=900&q=80' }
+                ]
+            },
+            coffee: {
+                titleKey: 'product-coffee-title',
+                eyebrowKey: 'product-tag-coffee',
+                originKey: 'coffee-origin-full',
+                ranges: [
+                    { nameKey: 'coffee-range-1', img: 'assets/grain-café-vert.jpg?w=900&q=80' }
+                ]
+            },
+            cashew: {
+                titleKey: 'product-cashew-title',
+                eyebrowKey: 'product-tag-cashew',
+                originKey: 'cashew-origin-full',
+                ranges: [
+                    // White Wholes : nom standard non traduisible
+                    { name: 'White Wholes 450', img: 'assets/amande-cajou-450.jpg?w=900&q=80' },
+                    { name: 'White Wholes 320', img: 'assets/amande-cajou-320.webp?w=900&q=80' },
+                    { name: 'White Wholes 240', img: 'assets/amande-cajou-240.avif?w=900&q=80' }
+                ]
+            }
+        };
+
+        // Références DOM du modal
+        const productModal = document.getElementById('productModal');
+        const modalEyebrow = document.getElementById('productModalEyebrow');
+        const modalTitle = document.getElementById('productModalTitle');
+        const modalOrigin = document.getElementById('modalOrigin');
+        const modalGalleryStage = document.getElementById('modalGalleryStage');
+        const modalGalleryCaption = document.getElementById('modalGalleryCaption');
+        const modalGalleryCounter = document.getElementById('modalGalleryCounter');
+        const modalGalleryThumbs = document.getElementById('modalGalleryThumbs');
+        const modalRangesList = document.getElementById('modalRangesList');
+        const modalGalleryPrev = document.getElementById('modalGalleryPrev');
+        const modalGalleryNext = document.getElementById('modalGalleryNext');
+
+        // État courant du modal
+        let modalState = {
+            productKey: null,
+            currentIndex: 0
+        };
+
+        // Récupère un libellé traduit (si clé i18n présente) ou un texte brut
+        function getLabel(item) {
+            if (item.nameKey && translations[currentLang] && translations[currentLang][item.nameKey]) {
+                return translations[currentLang][item.nameKey];
+            }
+            return item.name || '';
+        }
+
+        function t(key) {
+            return (translations[currentLang] && translations[currentLang][key]) || '';
+        }
+
+        // Construit le contenu du modal pour un produit donné
+        function populateModal(productKey) {
+            const data = PRODUCTS_DATA[productKey];
+            if (!data) return;
+
+            modalState.productKey = productKey;
+            modalState.currentIndex = 0;
+
+            // En-tête
+            modalEyebrow.textContent = t(data.eyebrowKey);
+            modalTitle.textContent = t(data.titleKey);
+            modalOrigin.textContent = t(data.originKey);
+
+            // Construire les images dans la stage (une seule fois, ensuite on bascule .active)
+            // On vide d'abord toutes les anciennes images
+            modalGalleryStage.querySelectorAll('.modal-gallery-image').forEach(el => el.remove());
+
+            data.ranges.forEach((range, idx) => {
+                const img = document.createElement('img');
+                img.className = 'modal-gallery-image' + (idx === 0 ? ' active' : '');
+                img.src = range.img;
+                img.alt = getLabel(range);
+                img.loading = 'lazy';
+                modalGalleryStage.appendChild(img);
+            });
+
+            // Construire les miniatures
+            modalGalleryThumbs.innerHTML = '';
+            data.ranges.forEach((range, idx) => {
+                const thumb = document.createElement('button');
+                thumb.type = 'button';
+                thumb.className = 'modal-thumb' + (idx === 0 ? ' active' : '');
+                thumb.setAttribute('aria-label', getLabel(range));
+                thumb.dataset.index = idx;
+                thumb.innerHTML = `<img src="${range.img}" alt="${getLabel(range)}" loading="lazy">`;
+                thumb.addEventListener('click', () => showImage(idx));
+                modalGalleryThumbs.appendChild(thumb);
+            });
+
+            // Construire les puces "gammes"
+            modalRangesList.innerHTML = '';
+            data.ranges.forEach((range, idx) => {
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'modal-range-chip' + (idx === 0 ? ' active' : '');
+                chip.dataset.index = idx;
+                chip.textContent = getLabel(range);
+                chip.addEventListener('click', () => showImage(idx));
+                modalRangesList.appendChild(chip);
+            });
+
+            // Cacher la flèche unique si une seule image
+            const onlyOne = data.ranges.length <= 1;
+            modalGalleryPrev.classList.toggle('hidden', onlyOne);
+            modalGalleryNext.classList.toggle('hidden', onlyOne);
+            modalGalleryCounter.style.display = onlyOne ? 'none' : 'inline-block';
+
+            // Position initiale
+            updateGalleryState();
+        }
+
+        // Met à jour la caption, le compteur, les états .active des thumbs/chips
+        function updateGalleryState() {
+            const data = PRODUCTS_DATA[modalState.productKey];
+            if (!data) return;
+            const idx = modalState.currentIndex;
+            const total = data.ranges.length;
+
+            // Images
+            modalGalleryStage.querySelectorAll('.modal-gallery-image').forEach((img, i) => {
+                img.classList.toggle('active', i === idx);
+            });
+
+            // Caption
+            modalGalleryCaption.textContent = getLabel(data.ranges[idx]);
+
+            // Compteur
+            modalGalleryCounter.textContent = `${idx + 1} / ${total}`;
+
+            // Miniatures
+            modalGalleryThumbs.querySelectorAll('.modal-thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === idx);
+            });
+
+            // Puces
+            modalRangesList.querySelectorAll('.modal-range-chip').forEach((c, i) => {
+                c.classList.toggle('active', i === idx);
+            });
+        }
+
+        function showImage(index) {
+            const data = PRODUCTS_DATA[modalState.productKey];
+            if (!data) return;
+            const total = data.ranges.length;
+            // Boucle cyclique
+            modalState.currentIndex = ((index % total) + total) % total;
+            updateGalleryState();
+        }
+
+        function showNext() { showImage(modalState.currentIndex + 1); }
+        function showPrev() { showImage(modalState.currentIndex - 1); }
+
+        // Ouvrir le modal
+        function openProductModal(productKey) {
+            populateModal(productKey);
+            productModal.classList.add('active');
+            productModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+        }
+
+        // Fermer le modal
+        function closeProductModal() {
+            productModal.classList.remove('active');
+            productModal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Écouteurs : ouverture depuis les cartes
+        document.querySelectorAll('[data-open-product]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                openProductModal(btn.dataset.openProduct);
+            });
+        });
+
+        // Fermeture : croix ou clic sur le backdrop
+        document.querySelectorAll('[data-close-modal]').forEach(el => {
+            el.addEventListener('click', closeProductModal);
+        });
+
+        // Fermeture : touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (!productModal.classList.contains('active')) return;
+            if (e.key === 'Escape') closeProductModal();
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+        });
+
+        // Navigation par flèches
+        modalGalleryPrev.addEventListener('click', showPrev);
+        modalGalleryNext.addEventListener('click', showNext);
+
+        // Quand l'utilisateur change la langue alors que le modal est ouvert,
+        // on re-remplit le contenu pour appliquer les nouvelles traductions
+        const _originalSetLanguage = setLanguage;
+        setLanguage = function(lang) {
+            _originalSetLanguage(lang);
+            if (productModal.classList.contains('active') && modalState.productKey) {
+                const savedIndex = modalState.currentIndex;
+                populateModal(modalState.productKey);
+                modalState.currentIndex = savedIndex;
+                updateGalleryState();
+            }
+        };
+
         /* ═══════════════════════════════════════════════════════════
            GALERIE D'IMAGES
            ═══════════════════════════════════════════════════════════ */
