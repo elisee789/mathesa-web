@@ -437,9 +437,37 @@
             }
 
             .valeur {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                grid-template-columns: 48px 1fr;
+                grid-template-rows: auto auto;
+                gap: 6px 14px;
                 padding: 24px 16px;
+            }
+
+            .valeur .num {
+                font-size: 28px;
+                grid-row: 1;
+                grid-column: 1;
+                align-self: center;
+            }
+
+            .valeur .name {
+                font-size: 18px;
+                grid-row: 1;
+                grid-column: 2;
+                align-self: center;
+                letter-spacing: .03em;
+            }
+
+            .valeur .desc {
+                grid-row: 2;
+                grid-column: 1 / -1;
+                font-size: 15px;
+                line-height: 1.7;
+                color: rgba(255, 255, 255, 0.82);
+            }
+
+            .valeur .dot {
+                display: none;
             }
 
             .carousel-track {
@@ -727,6 +755,23 @@
 
     .dot.active {
         width: 24px;
+    }
+
+    /* Mission / Vision / Credo — alignement mobile */
+    .pillars {
+        grid-template-columns: 1fr;
+    }
+
+    section.s {
+        padding: 60px 20px;
+    }
+
+    .pillar-text {
+        padding: 36px 28px;
+    }
+
+    .s-head {
+        margin-bottom: 48px;
     }
 }
 
@@ -2305,9 +2350,9 @@ section.s{
                     </p>
 
                     <div class="about-stats">
-                        <div class="stat"><div class="num">3</div><div class="lbl" data-i18n="stat_a">Produits phares</div></div>
                         <div class="stat"><div class="num">1</div><div class="lbl" data-i18n="stat_b">Pays d'origine</div></div>
                         <div class="stat"><div class="num">2</div><div class="lbl" data-i18n="stat_c">Continents qui commercent</div></div>
+                        <div class="stat"><div class="num">3</div><div class="lbl" data-i18n="stat_a">Produits phares</div></div>
                     </div>
                 </div>
 
@@ -2508,31 +2553,31 @@ section.s{
       <div class="valeur reveal">
         <div class="num">01</div>
         <div class="name" data-i18n="value-1-title">Excellence</div>
-        <div class="desc" data-i18n="value-1-desc">Sélection rigoureuse, qualité non négociable. Le standard avant la quantité.</div>
+        <div class="desc" data-i18n="value-1-desc">Le grade, l'humidité, la fermentation chaque paramètre est mesuré,documenté, certifié. La qualité n'est pas une promesse chez MATHESA. C'est un rapport SGS signé.</div>
         <div class="dot"></div>
       </div>
       <div class="valeur reveal d1">
         <div class="num">02</div>
-        <div class="name" data-i18n="value-2-title">Leadership Africain</div>
-        <div class="desc" data-i18n="value-2-desc">Des décisions prises en Afrique, pour l'Afrique — porter la voix du continent au-delà de ses rives.</div>
+        <div class="name" data-i18n="value-2-title">Ancrage Africain</div>
+        <div class="desc" data-i18n="value-2-desc">Nous connaissons les coopératives ivoiriennes de l'intérieur leurs rythmes, leurs saisons, leurs réalités. Ce n'est pas de l'expertise apprise. C'est de l'expérience vécue</div>
         <div class="dot"></div>
       </div>
       <div class="valeur reveal d2">
         <div class="num">03</div>
-        <div class="name" data-i18n="value-3-title">Commerce International</div>
-        <div class="desc" data-i18n="value-3-desc">Des routes claires, des partenaires éprouvés, des standards mondiaux respectés à la lettre.</div>
+        <div class="name" data-i18n="value-3-title">Standards Canadien</div>
+        <div class="desc" data-i18n="value-3-desc">Conformité ACIA, réglementation ASFC, instruments financiers canadiens, nous naviguons dans les deux systèmes sans compromis. Documentation irréprochable à chaque livraison.</div>
         <div class="dot"></div>
       </div>
       <div class="valeur reveal d3">
         <div class="num">04</div>
         <div class="name" data-i18n="value-4-title">Fiabilité</div>
-        <div class="desc" data-i18n="value-4-desc">Des engagements tenus, des délais respectés, une parole qui vaut écrit.</div>
+        <div class="desc" data-i18n="value-4-desc">Des engagements tenus, des délais respectés, une parole qui vaut contrat. En commerce international, la fiabilité ne se déclare pas elle se prouve expédition après expédition.</div>
         <div class="dot"></div>
       </div>
       <div class="valeur reveal d4">
         <div class="num">05</div>
-        <div class="name" data-i18n="value-5-title">Ambition Panafricaine</div>
-        <div class="desc" data-i18n="value-5-desc">Un projet qui dépasse Mathesa : faire grandir une filière où les producteurs prospèrent.</div>
+        <div class="name" data-i18n="value-5-title">Impact durable</div>
+        <div class="desc" data-i18n="value-5-desc">Un projet qui dépasse MATHESA : construire une filière où les producteurs ivoiriens prospèrent, où les prix sont justes, où la certification Rainforest Alliance et Fairtrade devient la norme et non l'exception</div>
         <div class="dot"></div>
       </div>
     </div>
@@ -2797,11 +2842,15 @@ section.s{
                     </div>
 
                     <div class="contact-item">
-                        <span class="contact-icon">📞</span>
+                        <span class="contact-icon" style="color:#25D366;">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                        </span>
                         <div class="contact-detail">
                             <div class="contact-detail-label" data-i18n="contact-phone-label">Téléphone</div>
                             <div class="contact-detail-value">
-                                <a href="tel:+18193290006">+18193290006</a>
+                                <a href="https://wa.me/18193290006" target="_blank">+18193290006</a>
                             </div>
                         </div>
                     </div>
@@ -2822,7 +2871,7 @@ section.s{
                             <div class="contact-detail-label" data-i18n="contact-hours-label">Heures d'ouverture</div>
                             <div class="contact-detail-value" data-i18n="contact-hours-value">
                                 Lundi au Vendredi : 8h - 18h<br>
-                                GMT-4
+                                UTC-4
                             </div>
                         </div>
                     </div>
@@ -2832,7 +2881,7 @@ section.s{
                 <form class="contact-form" id="contactForm" novalidate
                 action="https://formspree.io/f/mzdynpqq"
                 method="POST">
-                    <h3 class="form-title" data-i18n="form-title">Envoyez-nous un message</h3>
+                    <h3 class="form-title" data-i18n="form-title"> Devenir Partenaire</h3>
 
                     <div class="form-group">
                         <label for="fullname" data-i18n="form-name-label">Nom complet *</label>
@@ -2898,7 +2947,7 @@ section.s{
             <div class="footer-divider"></div>
             
             <p class="footer-copyright" data-i18n="footer-copyright">
-                © 2025 MATHESA. Tous droits réservés. | Marque premium panafricaine
+                © 2025 MATHESA Inc. Tous droits réservés. Importateur licencié ACIA · Accrédité ASFC
             </p>
         </div>
     </footer>
@@ -3013,15 +3062,15 @@ section.s{
                 'values-title-1': 'Nos',
                 'values-title-2': 'Valeurs',
                 'value-1-title': 'Excellence',
-                'value-1-desc': 'Sélection rigoureuse, qualité non négociable. Le standard avant la quantité.',
-                'value-2-title': 'Leadership Africain',
-                'value-2-desc': 'L\'Afrique au centre du commerce mondial.',
-                'value-3-title': 'Commerce International',
-                'value-3-desc': 'Des routes claires, des partenaires éprouvés, des standards mondiaux respectés à la lettre.',
+                'value-1-desc': 'Le grade, l\'humidité, la fermentation chaque paramètre est mesuré,documenté, certifié. La qualité n\'est pas une promesse chez MATHESA. C\'est un rapport SGS signé.',
+                'value-2-title': 'Ancrage Africain',
+                'value-2-desc': 'Nous connaissons les coopératives ivoiriennes de l\'intérieur leurs rythmes, leurs saisons, leurs réalités. Ce n\'est pas de l\'expertise apprise. C\'est de l\'expérience vécue.',
+                'value-3-title': 'Standards Canadien',
+                'value-3-desc': 'Conformité ACIA, réglementation ASFC, instruments financiers canadiens, nous naviguons dans les deux systèmes sans compromis. Documentation irréprochable à chaque livraison.',
                 'value-4-title': 'Fiabilité',
-                'value-4-desc': 'Des engagements tenus, des délais respectés, une parole qui vaut écrit.',
-                'value-5-title': 'Ambition Panafricaine',
-                'value-5-desc': 'Un projet qui dépasse Mathesa : faire grandir une filière où les producteurs prospèrent.',
+                'value-4-desc': 'Des engagements tenus, des délais respectés, une parole qui vaut contrat. En commerce international, la fiabilité ne se déclare pas elle se prouve expédition après expédition.',
+                'value-5-title': 'Impact durable',
+                'value-5-desc': 'Un projet qui dépasse MATHESA : construire une filière où les producteurs ivoiriens prospèrent, où les prix sont justes, où la certification Rainforest Alliance et Fairtrade devient la norme et non l\'exception.',
                 
                 // Produits
                 'products-eyebrow': 'Notre Sélection',
@@ -3073,10 +3122,10 @@ section.s{
                 'contact-phone-label': 'Téléphone',
                 'contact-email-label': 'Email',
                 'contact-hours-label': 'Heures d\'ouverture',
-                'contact-hours-value': 'Lundi au Vendredi : 8h - 18h<br>GMT-4',
+                'contact-hours-value': 'Lundi au Vendredi : 8h - 18h<br>UTC-4',
                 
                 // Formulaire
-                'form-title': 'Envoyez-nous un message',
+                'form-title': ' Devenir Partenaire',
                 'form-name-label': 'Nom complet *',
                 'form-name-placeholder': 'Votre nom complet',
                 'form-email-label': 'Adresse email *',
@@ -3108,7 +3157,7 @@ section.s{
                 
                 // Footer
                 'footer-signature': '« De l\'Afrique au Canada. Directement »',
-                'footer-copyright': '© 2025 MATHESA. Tous droits réservés. | Marque premium panafricaine'
+                'footer-copyright': '© 2025 MATHESA Inc. Tous droits réservés. Importateur licencié ACIA · Accrédité ASFC'
             },
             en: {
                 // Navigation
@@ -3131,8 +3180,8 @@ section.s{
                 'about-p1': '<strong>MATHESA</strong> is a Canadian company specializing in import and export between Africa and Canada, ensuring the highest standards of quality, traceability, and logistical reliability.',
                 'about-p2': 'Why Choose <strong>MATHESA</strong> ?',
                 'about-p3': 'Our strength lies in the founders\' <strong>dual roots</strong> in Guinea and Canada, as well as our commitment to delivering results that prioritize partner satisfaction. Mathesa combines an <strong>in-depth understanding</strong> of West African agricultural supply chains with a thorough knowledge of the Canadian market.',
-                'stat_a':"Flagship products",
-                'stat_b':"Countries of origin",
+                'stat_a':"Featured products",
+                'stat_b':"Country of origin",
                 'stat_c':"Continents that trade",
 
                 // Mission & Vision
@@ -3161,15 +3210,15 @@ section.s{
                 'values-title-1': 'Our',
                 'values-title-2': 'Values',
                 'value-1-title': 'Excellence',
-                'value-1-desc': 'Strict selection, uncompromising quality. Quality over quantity.',
-                'value-2-title': 'African Leadership',
-                'value-2-desc': 'Decisions made in Africa, for Africa carrying the continent\'s voice beyond its borders..',
-                'value-3-title': 'International Trade',
-                'value-3-desc': 'Clear processes, trusted partners, and strict adherence to global standards.',
+                'value-1-desc': 'Grade, moisture content, fermentation: every parameter is measured, documented, and certified. At MATHESA, quality isn\'t just a promise. It\'s a signed SGS report.',
+                'value-2-title': 'African Roots',
+                'value-2-desc': 'We know the Ivorian cooperatives inside and out: their rhythms, their seasons, their realities. This isn\'t just theoretical expertise, but hands-on experience.',
+                'value-3-title': 'Canadian standards',
+                'value-3-desc': ' Compliance with CFIA standards, CBSA regulations, and Canadian financial instruments: we have a thorough understanding of both systems without compromise. Flawless documentation for every shipment.',
                 'value-4-title': 'Reliability',
-                'value-4-desc': 'Commitments kept, deadlines met, a promise as good as a written contract.',
-                'value-5-title': 'Pan-African Ambition',
-                'value-5-desc': 'A project that goes beyond Mathesa: fostering the growth of an industry where producers thrive.',
+                'value-4-desc': 'Commitments kept, deadlines met, a promise that is as good as a contract. In international trade, reliability isn\'t just a claim it\'s proven shipment after shipment.',
+                'value-5-title': 'Sustainable Impact ',
+                'value-5-desc': 'A project that goes beyond MATHESA: building a supply chain where Ivorian producers thrive, where prices are fair, and where Rainforest Alliance and Fairtrade certification becomes the norm rather than the exception.',
                 
                 // Products
                 'products-eyebrow': 'Our Selection',
@@ -3220,10 +3269,10 @@ section.s{
                 'contact-phone-label': 'Phone',
                 'contact-email-label': 'Email',
                 'contact-hours-label': 'Business Hours',
-                'contact-hours-value': 'Monday to Friday: 8Am - 6PM',
+                'contact-hours-value': 'Monday to Friday: 8AM - 6PM<br>UTC-4',
                 
                 // Form
-                'form-title': 'Send us a message',
+                'form-title': 'Become a partner',
                 'form-name-label': 'Full Name *',
                 'form-name-placeholder': 'Your full name',
                 'form-email-label': 'Email Address *',
@@ -3256,7 +3305,7 @@ section.s{
                 
                 // Footer
                 'footer-signature': '« Direct from Africa to Canada »',
-                'footer-copyright': '© 2025 MATHESA. All rights reserved. | Premium Pan-African Brand'
+                'footer-copyright': '© 2025 MATHESA Inc. All rights reserved. CFIA-Licensed Importer · CBSA-Accredited'
             }
         };
 
@@ -3506,7 +3555,7 @@ section.s{
                 eyebrowKey: 'product-tag-cocoa',
                 originKey: 'cocoa-origin-full',
                 ranges: [
-                    { nameKey: 'cocoa-range-1', img: 'assets/beurre-cacao.jpg?w=900&q=80' }, 
+                    { nameKey: 'cocoa-range-1', img: 'assets/beurre-cacao.jpeg?w=900&q=80' }, 
                     { nameKey: 'cocoa-range-2', img: 'assets/poudre-cacao.jpg?w=900&q=80' },
                     { nameKey: 'cocoa-range-3', img: 'assets/feves-cacao.jpg?w=900&q=80' },
                     { nameKey: 'cocoa-range-4', img: 'assets/pate-cacao.jpg?w=900&q=80' }
