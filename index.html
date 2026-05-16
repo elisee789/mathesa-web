@@ -436,40 +436,6 @@
                 max-width: 320px;
             }
 
-            .valeur {
-                grid-template-columns: 48px 1fr;
-                grid-template-rows: auto auto;
-                gap: 6px 14px;
-                padding: 24px 16px;
-            }
-
-            .valeur .num {
-                font-size: 28px;
-                grid-row: 1;
-                grid-column: 1;
-                align-self: center;
-            }
-
-            .valeur .name {
-                font-size: 18px;
-                grid-row: 1;
-                grid-column: 2;
-                align-self: center;
-                letter-spacing: .03em;
-            }
-
-            .valeur .desc {
-                grid-row: 2;
-                grid-column: 1 / -1;
-                font-size: 15px;
-                line-height: 1.7;
-                color: rgba(255, 255, 255, 0.82);
-            }
-
-            .valeur .dot {
-                display: none;
-            }
-
             .carousel-track {
                 gap: 1.5rem;
                 padding: 2rem 1rem;
@@ -757,22 +723,6 @@
         width: 24px;
     }
 
-    /* Mission / Vision / Credo — alignement mobile */
-    .pillars {
-        grid-template-columns: 1fr;
-    }
-
-    section.s {
-        padding: 60px 20px;
-    }
-
-    .pillar-text {
-        padding: 36px 28px;
-    }
-
-    .s-head {
-        margin-bottom: 48px;
-    }
 }
 
 
@@ -2244,6 +2194,64 @@ section.s{
                 background-attachment: scroll;
             }
             .about-stats{grid-template-columns:1fr;gap:18px}
+
+            /* ── Mission / Vision / Credo : Credo en haut, Mission+Vision en bas ── */
+            .pillars {
+                grid-template-columns: 1fr;
+            }
+
+            section.s {
+                padding: 60px 20px;
+            }
+
+            .pillar-text {
+                padding: 36px 24px;
+            }
+
+            .s-head {
+                margin-bottom: 48px;
+            }
+
+            /* ── Nos Valeurs : layout 2 lignes sur mobile ── */
+            .valeurs {
+                overflow: hidden;
+            }
+
+            .valeur {
+                grid-template-columns: 44px 1fr;
+                grid-template-rows: auto auto;
+                gap: 8px 12px;
+                padding: 22px 0;
+            }
+
+            .valeur .num {
+                font-size: 26px;
+                grid-row: 1;
+                grid-column: 1;
+                align-self: center;
+            }
+
+            .valeur .name {
+                font-size: 15px;
+                grid-row: 1;
+                grid-column: 2;
+                align-self: center;
+                letter-spacing: .03em;
+                white-space: normal;
+                overflow-wrap: break-word;
+                word-break: break-word;
+            }
+
+            .valeur .desc {
+                grid-row: 2;
+                grid-column: 1 / -1;
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .valeur .dot {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
